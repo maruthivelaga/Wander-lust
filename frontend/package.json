@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Wanderlust Travel App Frontend",
   "private": true,
+  "homepage": "https://maruthivelaga.github.io/Wander-lust",
   "dependencies": {
     "@mapbox/mapbox-gl-directions": "^4.3.1",
     "@mapbox/mapbox-gl-geocoder": "^5.1.2",
@@ -30,7 +31,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +55,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.15",
+    "gh-pages": "^5.0.0",
     "postcss": "^8.4.29",
     "tailwindcss": "^3.3.0"
   },
