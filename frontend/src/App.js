@@ -1,5 +1,5 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import EnhancedDashboard from './components/EnhancedDashboard';
+import EnhancedDashboard from './components/dashboard';
 import Itinerary from './components/Itinerary';
 import Login from './components/Login';
 import Register from './components/Register';

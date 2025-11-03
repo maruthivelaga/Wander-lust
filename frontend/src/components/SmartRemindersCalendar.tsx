@@ -467,60 +467,222 @@ const SmartRemindersCalendar: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
-        >
-          <h1 className="text-4xl font-bold text-white mb-4">
-            🔔 Smart Reminders & Calendar
-          </h1>
-          <p className="text-xl text-gray-300 mb-6">
-            Intelligent travel planning with automated reminders
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -50, 0],
+              x: [0, 30, 0],
+              rotate: [0, 180, 360],
+              opacity: [0.1, 0.3, 0.1]
+            }}
+            transition={{
+              duration: 15 + i * 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            {i % 4 === 0 && <Bell className="w-20 h-20 text-purple-300" />}
+            {i % 4 === 1 && <Clock className="w-16 h-16 text-blue-300" />}
+            {i % 4 === 2 && <Calendar className="w-24 h-24 text-pink-300" />}
+            {i % 4 === 3 && <Cloud className="w-18 h-18 text-indigo-300" />}
+          </motion.div>
+        ))}
+      </div>
 
-          {/* View Toggle */}
-          <div className="flex justify-center gap-2 mb-6">
-            {[
-              { id: 'calendar', label: 'Calendar', icon: <Calendar className="h-4 w-4" /> },
-              { id: 'reminders', label: 'Reminders', icon: <Bell className="h-4 w-4" /> },
-              { id: 'weather', label: 'Weather Alerts', icon: <Cloud className="h-4 w-4" /> }
-            ].map((view) => (
-              <Button
-                key={view.id}
-                onClick={() => setCurrentView(view.id as any)}
-                className={`${
-                  currentView === view.id 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                }`}
-              >
-                {view.icon}
-                {view.label}
-              </Button>
-            ))}
+      <div className="max-w-7xl mx-auto relative z-10 p-4">
+        {/* Stunning Hero Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 rounded-3xl shadow-2xl mb-8 overflow-hidden relative"
+        >
+          {/* Animated Pattern Background */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px)`
+            }}></div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-wrap justify-center gap-4 mb-6">
-            <Button
-              onClick={() => setShowAddReminder(true)}
-              className="bg-green-600 hover:bg-green-700"
+          <div className="relative z-10 text-center py-16 px-4">
+            {/* Animated Icons Header */}
+            <motion.div 
+              className="flex justify-center items-center space-x-4 mb-6"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 200 }}
             >
-              <Plus className="mr-2 h-4 w-4" />
-              Add Reminder
-            </Button>
+              <motion.div
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                className="bg-white/20 backdrop-blur-sm p-4 rounded-2xl"
+              >
+                <Bell className="w-12 h-12 text-white" />
+              </motion.div>
+              <motion.div
+                animate={{ rotate: [0, -360] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                className="bg-white/20 backdrop-blur-sm p-4 rounded-2xl"
+              >
+                <Calendar className="w-12 h-12 text-white" />
+              </motion.div>
+              <motion.div
+                animate={{ 
+                  y: [0, -10, 0],
+                  rotate: [0, 5, -5, 0]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="bg-white/20 backdrop-blur-sm p-4 rounded-2xl"
+              >
+                <Clock className="w-12 h-12 text-white" />
+              </motion.div>
+            </motion.div>
 
-            <Button
-              onClick={exportReminders}
-              className="bg-blue-600 hover:bg-blue-700"
+            <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4 drop-shadow-2xl">
+              Smart Travel Reminders
+            </h1>
+            <p className="text-xl md:text-2xl text-pink-100 mb-8 max-w-3xl mx-auto">
+              Never miss a beat on your journey - Intelligent alerts, perfect timing, seamless travel
+            </p>
+
+            {/* Stats Bar */}
+            <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+              <motion.div 
+                whileHover={{ scale: 1.1, y: -5 }}
+                className="text-center bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4"
+              >
+                <motion.div 
+                  className="text-4xl font-bold text-white mb-1"
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  {reminders.length}
+                </motion.div>
+                <div className="text-pink-100 text-sm font-medium">Active Reminders</div>
+              </motion.div>
+              <motion.div 
+                whileHover={{ scale: 1.1, y: -5 }}
+                className="text-center bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4"
+              >
+                <motion.div 
+                  className="text-4xl font-bold text-white mb-1"
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+                >
+                  {calendarEvents.length}
+                </motion.div>
+                <div className="text-pink-100 text-sm font-medium">Scheduled Events</div>
+              </motion.div>
+              <motion.div 
+                whileHover={{ scale: 1.1, y: -5 }}
+                className="text-center bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4"
+              >
+                <motion.div 
+                  className="text-4xl font-bold text-white mb-1"
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+                >
+                  {weatherAlerts.length}
+                </motion.div>
+                <div className="text-pink-100 text-sm font-medium">Weather Alerts</div>
+              </motion.div>
+              <motion.div 
+                whileHover={{ scale: 1.1, y: -5 }}
+                className="text-center bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4"
+              >
+                <motion.div 
+                  className="text-4xl font-bold text-white mb-1"
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.9 }}
+                >
+                  {reminders.filter(r => r.isCompleted).length}
+                </motion.div>
+                <div className="text-pink-100 text-sm font-medium">Completed</div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Wave Divider */}
+          <div className="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 120" className="w-full h-12">
+              <path fill="rgb(249 250 251)" d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,74.7C1248,75,1344,53,1392,42.7L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"/>
+            </svg>
+          </div>
+        </motion.div>
+
+        {/* Enhanced View Toggle Tabs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <div className="flex flex-wrap justify-center gap-4">
+            {[
+              { id: 'calendar', label: 'Calendar View', icon: Calendar, gradient: 'from-blue-500 to-cyan-500' },
+              { id: 'reminders', label: 'My Reminders', icon: Bell, gradient: 'from-purple-500 to-pink-500' },
+              { id: 'weather', label: 'Weather Alerts', icon: Cloud, gradient: 'from-orange-500 to-red-500' }
+            ].map((view) => {
+              const Icon = view.icon;
+              return (
+                <motion.button
+                  key={view.id}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setCurrentView(view.id as any)}
+                  className={`px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-lg flex items-center space-x-3 ${
+                    currentView === view.id
+                      ? `bg-gradient-to-r ${view.gradient} text-white shadow-2xl`
+                      : 'bg-white text-gray-700 hover:shadow-xl'
+                  }`}
+                >
+                  <motion.div
+                    animate={currentView === view.id ? { rotate: [0, 360] } : {}}
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Icon className="w-6 h-6" />
+                  </motion.div>
+                  <span>{view.label}</span>
+                </motion.button>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* Enhanced Action Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mb-8"
+        >
+          <div className="flex flex-wrap justify-center gap-4">
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setShowAddReminder(true)}
+              className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg flex items-center space-x-2 hover:from-green-600 hover:to-emerald-700"
             >
-              <Download className="mr-2 h-4 w-4" />
-              Export
-            </Button>
+              <Plus className="w-5 h-5" />
+              <span>Create Reminder</span>
+            </motion.button>
+
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
+              whileTap={{ scale: 0.95 }}
+              onClick={exportReminders}
+              className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg flex items-center space-x-2 hover:from-blue-600 hover:to-indigo-700"
+            >
+              <Download className="w-5 h-5" />
+              <span>Export Data</span>
+            </motion.button>
 
             <label className="cursor-pointer">
               <input
@@ -529,56 +691,69 @@ const SmartRemindersCalendar: React.FC = () => {
                 onChange={importReminders}
                 className="hidden"
               />
-              <Button className="bg-purple-600 hover:bg-purple-700">
-                <Upload className="mr-2 h-4 w-4" />
-                Import
-              </Button>
+              <motion.div
+                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg flex items-center space-x-2 hover:from-purple-600 hover:to-pink-700"
+              >
+                <Upload className="w-5 h-5" />
+                <span>Import Data</span>
+              </motion.div>
             </label>
 
-            <Button
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
+              whileTap={{ scale: 0.95 }}
               onClick={requestNotificationPermission}
-              className="bg-orange-600 hover:bg-orange-700"
+              className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg flex items-center space-x-2 hover:from-orange-600 hover:to-red-700"
             >
-              <Settings className="mr-2 h-4 w-4" />
-              Notifications
-            </Button>
+              <Settings className="w-5 h-5" />
+              <span>Settings</span>
+            </motion.button>
           </div>
+        </motion.div>
 
-          {/* Search and Filter */}
-          {currentView === 'reminders' && (
-            <div className="flex flex-wrap justify-center gap-4 mb-6">
+        {/* Enhanced Search and Filter */}
+        {currentView === 'reminders' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="mb-8"
+          >
+            <div className="flex flex-wrap justify-center gap-4">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="Search reminders..."
+                  placeholder="Search reminders, destinations..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="pl-12 pr-6 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent w-80 shadow-lg"
                 />
               </div>
 
               <select
                 value={filterType}
                 onChange={(e) => setFilterType(e.target.value)}
-                className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-6 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent shadow-lg font-medium"
               >
-                <option value="all">All Types</option>
-                <option value="pre_trip">Pre-trip</option>
-                <option value="during_trip">During Trip</option>
-                <option value="post_trip">Post-trip</option>
-                <option value="weather">Weather</option>
-                <option value="document">Documents</option>
-                <option value="health">Health</option>
-                <option value="booking">Bookings</option>
+                <option value="all">🌍 All Types</option>
+                <option value="pre_trip">✈️ Pre-trip</option>
+                <option value="during_trip">🗺️ During Trip</option>
+                <option value="post_trip">📸 Post-trip</option>
+                <option value="weather">☁️ Weather</option>
+                <option value="document">📄 Documents</option>
+                <option value="health">❤️ Health</option>
+                <option value="booking">🎫 Bookings</option>
               </select>
             </div>
-          )}
-        </motion.div>
+          </motion.div>
+        )}
 
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Calendar View */}
+          {/* Enhanced Calendar View */}
           {currentView === 'calendar' && (
             <>
               {/* Calendar Component */}
@@ -586,94 +761,174 @@ const SmartRemindersCalendar: React.FC = () => {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10"
+                  className="bg-white rounded-3xl shadow-2xl p-8 border-2 border-purple-100"
                 >
-                  <h3 className="text-2xl font-bold text-white mb-4 flex items-center">
-                    <Calendar className="mr-2 h-6 w-6" />
-                    Travel Calendar
-                  </h3>
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center">
+                      <Calendar className="mr-3 h-8 w-8 text-purple-600" />
+                      Travel Calendar
+                    </h3>
+                    <motion.div
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                      className="text-4xl"
+                    >
+                      🗓️
+                    </motion.div>
+                  </div>
 
-                  {/* Simple calendar grid */}
-                  <div className="grid grid-cols-7 gap-2 mb-4">
-                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                      <div key={day} className="text-center text-sm font-semibold text-gray-300 p-2">
-                        {day}
-                      </div>
-                    ))}
+                  {/* Calendar Grid */}
+                  <div className="space-y-4">
+                    {/* Month/Year Header */}
+                    <div className="flex items-center justify-between mb-4">
+                      <motion.button
+                        whileHover={{ scale: 1.1, x: -5 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl shadow-lg"
+                      >
+                        ‹
+                      </motion.button>
+                      <h4 className="text-2xl font-bold text-gray-800">January 2024</h4>
+                      <motion.button
+                        whileHover={{ scale: 1.1, x: 5 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl shadow-lg"
+                      >
+                        ›
+                      </motion.button>
+                    </div>
+
+                    {/* Day Headers */}
+                    <div className="grid grid-cols-7 gap-2 mb-2">
+                      {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                        <div key={day} className="text-center text-sm font-bold text-purple-600 p-3 bg-purple-50 rounded-lg">
+                          {day}
+                        </div>
+                      ))}
+                    </div>
                     
-                    {/* Calendar days (simplified) */}
-                    {Array.from({ length: 35 }, (_, i) => {
-                      const day = i - 5; // Start from previous month
-                      const date = new Date(2024, 0, day + 1);
-                      const isToday = date.toDateString() === new Date().toDateString();
-                      const hasEvent = calendarEvents.some(event => 
-                        new Date(event.start).toDateString() === date.toDateString()
-                      );
-                      
-                      return (
-                        <motion.div
-                          key={i}
-                          whileHover={{ scale: 1.05 }}
-                          className={`p-2 text-center cursor-pointer rounded-lg transition-all ${
-                            isToday 
-                              ? 'bg-blue-600 text-white' 
-                              : hasEvent 
-                                ? 'bg-purple-500/30 text-white' 
-                                : 'bg-white/5 text-gray-300 hover:bg-white/10'
-                          }`}
-                          onClick={() => setSelectedDate(date.toISOString().split('T')[0])}
-                        >
-                          <div className="text-sm">{date.getDate()}</div>
-                          {hasEvent && (
-                            <div className="w-1 h-1 bg-yellow-400 rounded-full mx-auto mt-1"></div>
-                          )}
-                        </motion.div>
-                      );
-                    })}
+                    {/* Calendar Days */}
+                    <div className="grid grid-cols-7 gap-2">
+                      {Array.from({ length: 35 }, (_, i) => {
+                        const day = i - 5;
+                        const date = new Date(2024, 0, day + 1);
+                        const isToday = date.toDateString() === new Date().toDateString();
+                        const hasEvent = calendarEvents.some(event => 
+                          new Date(event.start).toDateString() === date.toDateString()
+                        );
+                        const dayEvents = calendarEvents.filter(event =>
+                          new Date(event.start).toDateString() === date.toDateString()
+                        );
+                        
+                        return (
+                          <motion.div
+                            key={i}
+                            whileHover={{ scale: 1.1, y: -5 }}
+                            whileTap={{ scale: 0.95 }}
+                            className={`relative p-3 text-center cursor-pointer rounded-xl transition-all shadow-lg ${
+                              isToday 
+                                ? 'bg-gradient-to-br from-blue-500 to-cyan-500 text-white ring-4 ring-blue-200' 
+                                : hasEvent 
+                                  ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white hover:shadow-xl' 
+                                  : 'bg-white text-gray-700 hover:bg-gradient-to-br hover:from-purple-50 hover:to-pink-50 border-2 border-gray-100'
+                            }`}
+                            onClick={() => setSelectedDate(date.toISOString().split('T')[0])}
+                          >
+                            <div className="text-lg font-bold">{date.getDate()}</div>
+                            {hasEvent && (
+                              <div className="flex justify-center space-x-1 mt-1">
+                                {dayEvents.slice(0, 3).map((event, idx) => (
+                                  <motion.div
+                                    key={idx}
+                                    animate={{ scale: [1, 1.2, 1] }}
+                                    transition={{ duration: 1, repeat: Infinity, delay: idx * 0.2 }}
+                                    className="w-1.5 h-1.5 rounded-full"
+                                    style={{ backgroundColor: isToday ? 'white' : event.color }}
+                                  />
+                                ))}
+                              </div>
+                            )}
+                            {isToday && (
+                              <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-xs">
+                                ⭐
+                              </div>
+                            )}
+                          </motion.div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </motion.div>
               </div>
 
-              {/* Events Sidebar */}
+              {/* Enhanced Events Sidebar */}
               <div>
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10"
+                  className="bg-white rounded-3xl shadow-2xl p-6 border-2 border-purple-100 sticky top-4"
                 >
-                  <h3 className="text-xl font-bold text-white mb-4">
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-6 flex items-center">
+                    <Plane className="mr-2 h-6 w-6 text-purple-600" />
                     Upcoming Events
                   </h3>
 
-                  <div className="space-y-3 max-h-96 overflow-y-auto">
-                    {calendarEvents.map((event) => (
+                  <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
+                    {calendarEvents.map((event, index) => (
                       <motion.div
                         key={event.id}
-                        whileHover={{ scale: 1.02 }}
-                        className="p-3 bg-white/5 border border-white/20 rounded-lg"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        whileHover={{ scale: 1.03, x: 5 }}
+                        className="relative p-4 rounded-2xl shadow-lg border-2 border-gray-100 hover:shadow-xl transition-all bg-gradient-to-br from-white to-purple-50"
                       >
-                        <div className="flex items-start justify-between mb-2">
-                          <h4 className="font-semibold text-white text-sm">{event.title}</h4>
-                          <div 
-                            className="w-3 h-3 rounded-full"
-                            style={{ backgroundColor: event.color }}
-                          ></div>
+                        {/* Event Color Indicator */}
+                        <div 
+                          className="absolute left-0 top-0 bottom-0 w-2 rounded-l-2xl"
+                          style={{ backgroundColor: event.color }}
+                        />
+
+                        <div className="pl-4">
+                          <div className="flex items-start justify-between mb-2">
+                            <h4 className="font-bold text-gray-900 text-lg">{event.title}</h4>
+                            <motion.div
+                              animate={{ rotate: [0, 360] }}
+                              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                              className="text-2xl"
+                            >
+                              {event.type === 'flight' && '✈️'}
+                              {event.type === 'hotel' && '🏨'}
+                              {event.type === 'activity' && '🎯'}
+                              {event.type === 'reminder' && '🔔'}
+                            </motion.div>
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <p className="text-sm text-gray-600 flex items-center">
+                              <Clock className="inline mr-2 h-4 w-4 text-purple-500" />
+                              {new Date(event.start).toLocaleString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}
+                            </p>
+                            
+                            {event.location && (
+                              <p className="text-sm text-gray-600 flex items-center">
+                                <MapPin className="inline mr-2 h-4 w-4 text-red-500" />
+                                {event.location}
+                              </p>
+                            )}
+                            
+                            {event.description && (
+                              <p className="text-sm text-gray-500 bg-white/50 p-2 rounded-lg">
+                                {event.description}
+                              </p>
+                            )}
+                          </div>
                         </div>
-                        
-                        <p className="text-xs text-gray-300 mb-1">
-                          {new Date(event.start).toLocaleString()}
-                        </p>
-                        
-                        {event.location && (
-                          <p className="text-xs text-gray-400 mb-1">
-                            <MapPin className="inline mr-1 h-3 w-3" />
-                            {event.location}
-                          </p>
-                        )}
-                        
-                        {event.description && (
-                          <p className="text-xs text-gray-400">{event.description}</p>
-                        )}
                       </motion.div>
                     ))}
                   </div>
@@ -682,297 +937,520 @@ const SmartRemindersCalendar: React.FC = () => {
             </>
           )}
 
-          {/* Reminders View */}
+          {/* Enhanced Reminders View */}
           {currentView === 'reminders' && (
             <div className="lg:col-span-3">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10"
+                className="bg-white rounded-3xl shadow-2xl p-8 border-2 border-purple-100"
               >
-                <h3 className="text-2xl font-bold text-white mb-4 flex items-center">
-                  <Bell className="mr-2 h-6 w-6" />
-                  Travel Reminders ({filteredReminders.length})
-                </h3>
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center">
+                    <Bell className="mr-3 h-8 w-8 text-purple-600" />
+                    Travel Reminders
+                  </h3>
+                  <div className="flex items-center space-x-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-full shadow-lg">
+                    <span className="font-bold text-2xl">{filteredReminders.length}</span>
+                    <span className="text-sm">Total</span>
+                  </div>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {filteredReminders.map((reminder) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredReminders.map((reminder, index) => (
                     <motion.div
                       key={reminder.id}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      whileHover={{ scale: 1.02 }}
-                      className={`p-4 rounded-lg border transition-all ${
+                      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                      whileHover={{ scale: 1.03, y: -8 }}
+                      className={`relative p-6 rounded-2xl shadow-lg border-2 transition-all ${
                         reminder.isCompleted
-                          ? 'bg-green-500/10 border-green-500/30'
-                          : 'bg-white/5 border-white/20'
+                          ? 'bg-gradient-to-br from-green-50 to-emerald-50 border-green-300'
+                          : 'bg-gradient-to-br from-white to-purple-50 border-purple-200 hover:shadow-2xl'
                       }`}
                     >
+                      {/* Priority Badge */}
+                      <div className="absolute -top-3 -right-3">
+                        <motion.div
+                          animate={{ 
+                            scale: reminder.priority === 'urgent' ? [1, 1.2, 1] : 1,
+                            rotate: reminder.priority === 'urgent' ? [0, 5, -5, 0] : 0
+                          }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                          className={`px-3 py-1 rounded-full text-xs font-bold shadow-lg ${getPriorityColor(reminder.priority)}`}
+                        >
+                          {reminder.priority.toUpperCase()}
+                        </motion.div>
+                      </div>
+
                       {/* Reminder Header */}
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex items-center space-x-2">
-                          <div className={`p-1 rounded ${getPriorityColor(reminder.priority)}`}>
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-center space-x-3">
+                          <motion.div 
+                            whileHover={{ rotate: 360 }}
+                            transition={{ duration: 0.5 }}
+                            className={`p-3 rounded-xl ${getPriorityColor(reminder.priority)}`}
+                          >
                             {getTypeIcon(reminder.type)}
-                          </div>
-                          <span className={`text-xs px-2 py-1 rounded-full ${getPriorityColor(reminder.priority)}`}>
-                            {reminder.priority.toUpperCase()}
-                          </span>
+                          </motion.div>
                         </div>
                         
-                        <div className="flex space-x-1">
-                          <button
+                        <div className="flex space-x-2">
+                          <motion.button
+                            whileHover={{ scale: 1.2, rotate: 15 }}
+                            whileTap={{ scale: 0.9 }}
                             onClick={() => toggleReminderComplete(reminder.id)}
-                            className={`p-1 rounded transition-colors ${
+                            className={`p-2 rounded-lg transition-colors shadow-md ${
                               reminder.isCompleted 
-                                ? 'text-green-400 hover:text-green-300' 
-                                : 'text-gray-400 hover:text-white'
+                                ? 'bg-green-500 text-white' 
+                                : 'bg-gray-200 text-gray-500 hover:bg-green-500 hover:text-white'
                             }`}
                           >
-                            <CheckCircle className="h-4 w-4" />
-                          </button>
-                          <button
+                            <CheckCircle className="h-5 w-5" />
+                          </motion.button>
+                          <motion.button
+                            whileHover={{ scale: 1.2 }}
+                            whileTap={{ scale: 0.9 }}
                             onClick={() => setEditingReminder(reminder)}
-                            className="p-1 text-gray-400 hover:text-white rounded transition-colors"
+                            className="p-2 bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white rounded-lg transition-colors shadow-md"
                           >
-                            <Edit3 className="h-4 w-4" />
-                          </button>
-                          <button
+                            <Edit3 className="h-5 w-5" />
+                          </motion.button>
+                          <motion.button
+                            whileHover={{ scale: 1.2 }}
+                            whileTap={{ scale: 0.9 }}
                             onClick={() => deleteReminder(reminder.id)}
-                            className="p-1 text-red-400 hover:text-red-300 rounded transition-colors"
+                            className="p-2 bg-red-100 text-red-600 hover:bg-red-500 hover:text-white rounded-lg transition-colors shadow-md"
                           >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
+                            <Trash2 className="h-5 w-5" />
+                          </motion.button>
                         </div>
                       </div>
 
                       {/* Reminder Content */}
-                      <h4 className={`font-semibold mb-2 ${
-                        reminder.isCompleted ? 'text-gray-400 line-through' : 'text-white'
+                      <h4 className={`font-bold text-xl mb-3 ${
+                        reminder.isCompleted ? 'text-gray-400 line-through' : 'text-gray-900'
                       }`}>
                         {reminder.title}
                       </h4>
                       
-                      <p className="text-sm text-gray-300 mb-2">{reminder.description}</p>
+                      <p className="text-sm text-gray-600 mb-4 line-clamp-2">{reminder.description}</p>
                       
                       {reminder.destination && (
-                        <p className="text-xs text-gray-400 mb-2">
-                          <MapPin className="inline mr-1 h-3 w-3" />
-                          {reminder.destination}
-                        </p>
+                        <div className="flex items-center mb-3 bg-white/60 p-2 rounded-lg">
+                          <MapPin className="h-4 w-4 text-red-500 mr-2" />
+                          <span className="text-sm font-medium text-gray-700">{reminder.destination}</span>
+                        </div>
                       )}
 
-                      <div className="flex items-center text-xs text-gray-400 mb-3">
-                        <Clock className="mr-1 h-3 w-3" />
-                        {new Date(`${reminder.reminderDate}T${reminder.reminderTime}`).toLocaleString()}
+                      <div className="flex items-center text-sm text-gray-600 mb-4 bg-white/60 p-2 rounded-lg">
+                        <Clock className="mr-2 h-4 w-4 text-purple-500" />
+                        <span className="font-medium">
+                          {new Date(`${reminder.reminderDate}T${reminder.reminderTime}`).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                          })} at {reminder.reminderTime}
+                        </span>
                       </div>
 
-                      {/* Checklist */}
+                      {/* Enhanced Checklist */}
                       {reminder.checklist.length > 0 && (
-                        <div className="border-t border-white/10 pt-3">
-                          <h5 className="text-xs font-semibold text-gray-300 mb-2">Checklist:</h5>
-                          <div className="space-y-1">
+                        <div className="border-t-2 border-purple-100 pt-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <h5 className="text-sm font-bold text-gray-700 flex items-center">
+                              <CheckCircle className="h-4 w-4 mr-1 text-purple-500" />
+                              Checklist
+                            </h5>
+                            <span className="text-xs font-semibold bg-purple-100 text-purple-700 px-2 py-1 rounded-full">
+                              {reminder.checklist.filter(i => i.isCompleted).length}/{reminder.checklist.length}
+                            </span>
+                          </div>
+                          <div className="space-y-2">
                             {reminder.checklist.slice(0, 3).map((item) => (
-                              <div key={item.id} className="flex items-center space-x-2">
+                              <motion.div 
+                                key={item.id} 
+                                className="flex items-center space-x-2 bg-white/60 p-2 rounded-lg hover:bg-white transition-colors"
+                                whileHover={{ x: 5 }}
+                              >
                                 <input
                                   type="checkbox"
                                   checked={item.isCompleted}
                                   onChange={() => toggleChecklistItem(reminder.id, item.id)}
-                                  className="w-3 h-3 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                                  className="w-4 h-4 text-purple-600 rounded focus:ring-2 focus:ring-purple-500 cursor-pointer"
                                 />
-                                <span className={`text-xs ${
-                                  item.isCompleted ? 'text-gray-400 line-through' : 'text-gray-300'
+                                <span className={`text-sm flex-1 ${
+                                  item.isCompleted ? 'text-gray-400 line-through' : 'text-gray-700 font-medium'
                                 }`}>
                                   {item.text}
                                 </span>
-                              </div>
+                              </motion.div>
                             ))}
                             {reminder.checklist.length > 3 && (
-                              <div className="text-xs text-gray-400">
+                              <div className="text-xs text-purple-600 font-semibold pl-6">
                                 +{reminder.checklist.length - 3} more items
                               </div>
                             )}
                           </div>
                         </div>
                       )}
+
+                      {/* Notification Methods */}
+                      <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t-2 border-purple-100">
+                        {reminder.notificationMethods.map((method) => (
+                          <span key={method} className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full font-semibold">
+                            {method === 'push' && '🔔'}
+                            {method === 'email' && '📧'}
+                            {method === 'sms' && '📱'}
+                            {' '}{method.toUpperCase()}
+                          </span>
+                        ))}
+                      </div>
                     </motion.div>
                   ))}
                 </div>
+
+                {filteredReminders.length === 0 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-center py-16"
+                  >
+                    <Bell className="w-20 h-20 text-gray-300 mx-auto mb-4" />
+                    <h3 className="text-2xl font-bold text-gray-400 mb-2">No Reminders Found</h3>
+                    <p className="text-gray-500">Create your first reminder to get started!</p>
+                  </motion.div>
+                )}
               </motion.div>
             </div>
           )}
 
-          {/* Weather Alerts View */}
+          {/* Enhanced Weather Alerts View */}
           {currentView === 'weather' && (
             <div className="lg:col-span-3">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10"
+                className="bg-white rounded-3xl shadow-2xl p-8 border-2 border-purple-100"
               >
-                <h3 className="text-2xl font-bold text-white mb-4 flex items-center">
-                  <Cloud className="mr-2 h-6 w-6" />
-                  Weather Alerts
-                </h3>
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent flex items-center">
+                    <Cloud className="mr-3 h-8 w-8 text-orange-600" />
+                    Weather Alerts
+                  </h3>
+                  <motion.div
+                    animate={{ 
+                      y: [0, -10, 0],
+                      rotate: [0, 10, -10, 0]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                    className="text-5xl"
+                  >
+                    ⛅
+                  </motion.div>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {weatherAlerts.map((alert) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {weatherAlerts.map((alert, index) => (
                     <motion.div
                       key={alert.id}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      whileHover={{ scale: 1.02 }}
-                      className={`p-4 rounded-lg border ${
+                      initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
+                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ scale: 1.05, y: -10 }}
+                      className={`relative p-6 rounded-2xl border-2 shadow-lg overflow-hidden ${
                         alert.severity === 'severe' 
-                          ? 'bg-red-500/10 border-red-500/30' 
+                          ? 'bg-gradient-to-br from-red-50 to-orange-50 border-red-300' 
                           : alert.severity === 'warning'
-                            ? 'bg-orange-500/10 border-orange-500/30'
-                            : 'bg-blue-500/10 border-blue-500/30'
+                            ? 'bg-gradient-to-br from-orange-50 to-yellow-50 border-orange-300'
+                            : 'bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-300'
                       }`}
                     >
-                      <div className="flex items-start justify-between mb-3">
-                        <h4 className="font-semibold text-white">{alert.destination}</h4>
-                        <div className={`p-1 rounded ${
-                          alert.severity === 'severe' 
-                            ? 'text-red-400 bg-red-500/20' 
-                            : alert.severity === 'warning'
-                              ? 'text-orange-400 bg-orange-500/20'
-                              : 'text-blue-400 bg-blue-500/20'
-                        }`}>
-                          <AlertTriangle className="h-4 w-4" />
-                        </div>
+                      {/* Animated Background Pattern */}
+                      <div className="absolute inset-0 opacity-5">
+                        <motion.div
+                          animate={{ 
+                            backgroundPosition: ['0% 0%', '100% 100%']
+                          }}
+                          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                          className="w-full h-full"
+                          style={{
+                            backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,.05) 35px, rgba(0,0,0,.05) 70px)'
+                          }}
+                        />
                       </div>
 
-                      <p className="text-sm font-medium text-white mb-2">{alert.condition}</p>
-                      <p className="text-sm text-gray-300 mb-3">{alert.message}</p>
-                      
-                      <div className="flex items-center text-xs text-gray-400">
-                        <Calendar className="mr-1 h-3 w-3" />
-                        {new Date(alert.date).toLocaleDateString()}
+                      {/* Severity Badge */}
+                      <div className="absolute -top-3 -right-3">
+                        <motion.div
+                          animate={{ 
+                            scale: alert.severity === 'severe' ? [1, 1.2, 1] : 1,
+                            rotate: alert.severity === 'severe' ? [0, 10, -10, 0] : 0
+                          }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                          className={`px-4 py-2 rounded-full font-bold text-sm shadow-lg flex items-center space-x-1 ${
+                            alert.severity === 'severe' 
+                              ? 'bg-red-500 text-white' 
+                              : alert.severity === 'warning'
+                                ? 'bg-orange-500 text-white'
+                                : 'bg-blue-500 text-white'
+                          }`}
+                        >
+                          <AlertTriangle className="h-4 w-4" />
+                          <span>{alert.severity.toUpperCase()}</span>
+                        </motion.div>
+                      </div>
+
+                      <div className="relative z-10">
+                        {/* Location Header */}
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h4 className="font-bold text-xl text-gray-900 mb-1 flex items-center">
+                              <MapPin className="h-5 w-5 mr-2 text-red-500" />
+                              {alert.destination}
+                            </h4>
+                            <p className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                              {alert.condition}
+                            </p>
+                          </div>
+                          <motion.div
+                            animate={{ rotate: [0, 360] }}
+                            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                            className="text-4xl"
+                          >
+                            {alert.condition.includes('Rain') && '🌧️'}
+                            {alert.condition.includes('Cold') && '🥶'}
+                            {alert.condition.includes('Clear') && '☀️'}
+                            {alert.condition.includes('Snow') && '❄️'}
+                          </motion.div>
+                        </div>
+
+                        {/* Alert Message */}
+                        <div className="bg-white/70 backdrop-blur-sm p-4 rounded-xl mb-4">
+                          <p className="text-sm text-gray-700 leading-relaxed">{alert.message}</p>
+                        </div>
+                        
+                        {/* Date */}
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center text-sm text-gray-600 bg-white/70 px-3 py-2 rounded-lg">
+                            <Calendar className="mr-2 h-4 w-4 text-purple-500" />
+                            <span className="font-medium">
+                              {new Date(alert.date).toLocaleDateString('en-US', {
+                                month: 'long',
+                                day: 'numeric',
+                                year: 'numeric'
+                              })}
+                            </span>
+                          </div>
+                          
+                          <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            className={`p-2 rounded-lg shadow-md ${
+                              alert.severity === 'severe'
+                                ? 'bg-red-500 text-white'
+                                : alert.severity === 'warning'
+                                  ? 'bg-orange-500 text-white'
+                                  : 'bg-blue-500 text-white'
+                            }`}
+                          >
+                            <Bell className="h-5 w-5" />
+                          </motion.button>
+                        </div>
                       </div>
                     </motion.div>
                   ))}
                 </div>
+
+                {weatherAlerts.length === 0 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-center py-16"
+                  >
+                    <Cloud className="w-20 h-20 text-gray-300 mx-auto mb-4" />
+                    <h3 className="text-2xl font-bold text-gray-400 mb-2">No Weather Alerts</h3>
+                    <p className="text-gray-500">All clear for your travels!</p>
+                  </motion.div>
+                )}
               </motion.div>
             </div>
           )}
         </div>
 
-        {/* Add Reminder Modal */}
+        {/* Enhanced Add Reminder Modal */}
         <AnimatePresence>
           {showAddReminder && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+              className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50"
               onClick={() => setShowAddReminder(false)}
             >
               <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.8, opacity: 0 }}
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 max-w-md w-full max-h-[90vh] overflow-y-auto"
+                initial={{ scale: 0.8, opacity: 0, y: 50 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.8, opacity: 0, y: 50 }}
+                transition={{ type: "spring", damping: 25 }}
+                className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border-2 border-purple-200"
                 onClick={(e) => e.stopPropagation()}
               >
-                <h3 className="text-2xl font-bold text-white mb-6">Add New Reminder</h3>
-
-                <div className="space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Reminder title"
-                    value={newReminder.title}
-                    onChange={(e) => setNewReminder(prev => ({ ...prev, title: e.target.value }))}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-
-                  <textarea
-                    placeholder="Description"
-                    value={newReminder.description}
-                    onChange={(e) => setNewReminder(prev => ({ ...prev, description: e.target.value }))}
-                    rows={3}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-                  />
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <select
-                      value={newReminder.type}
-                      onChange={(e) => setNewReminder(prev => ({ ...prev, type: e.target.value as any }))}
-                      className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                {/* Modal Header */}
+                <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 p-6 rounded-t-3xl">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-3xl font-bold text-white flex items-center">
+                      <Plus className="mr-3 h-8 w-8" />
+                      Create New Reminder
+                    </h3>
+                    <motion.button
+                      whileHover={{ scale: 1.1, rotate: 90 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => setShowAddReminder(false)}
+                      className="p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
                     >
-                      <option value="pre_trip">Pre-trip</option>
-                      <option value="during_trip">During Trip</option>
-                      <option value="post_trip">Post-trip</option>
-                      <option value="weather">Weather</option>
-                      <option value="document">Documents</option>
-                      <option value="health">Health</option>
-                      <option value="booking">Bookings</option>
-                    </select>
-
-                    <select
-                      value={newReminder.priority}
-                      onChange={(e) => setNewReminder(prev => ({ ...prev, priority: e.target.value as any }))}
-                      className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="low">Low Priority</option>
-                      <option value="medium">Medium Priority</option>
-                      <option value="high">High Priority</option>
-                      <option value="urgent">Urgent</option>
-                    </select>
+                      <X className="h-6 w-6 text-white" />
+                    </motion.button>
                   </div>
+                  <p className="text-pink-100 mt-2">Set up your travel reminder with all the details</p>
+                </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <input
-                      type="date"
-                      value={newReminder.reminderDate}
-                      onChange={(e) => setNewReminder(prev => ({ ...prev, reminderDate: e.target.value }))}
-                      className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-
-                    <input
-                      type="time"
-                      value={newReminder.reminderTime}
-                      onChange={(e) => setNewReminder(prev => ({ ...prev, reminderTime: e.target.value }))}
-                      className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <input
-                    type="text"
-                    placeholder="Destination (optional)"
-                    value={newReminder.destination || ''}
-                    onChange={(e) => setNewReminder(prev => ({ ...prev, destination: e.target.value }))}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-
-                  <div className="flex items-center space-x-4">
-                    <label className="flex items-center text-white">
-                      <input
-                        type="checkbox"
-                        checked={newReminder.isRecurring}
-                        onChange={(e) => setNewReminder(prev => ({ ...prev, isRecurring: e.target.checked }))}
-                        className="mr-2 w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
-                      />
-                      Recurring
-                    </label>
-
-                    {newReminder.isRecurring && (
-                      <select
-                        value={newReminder.recurringPattern}
-                        onChange={(e) => setNewReminder(prev => ({ ...prev, recurringPattern: e.target.value as any }))}
-                        className="px-3 py-1 bg-white/10 border border-white/20 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option value="daily">Daily</option>
-                        <option value="weekly">Weekly</option>
-                        <option value="monthly">Monthly</option>
-                      </select>
-                    )}
-                  </div>
-
+                {/* Modal Content */}
+                <div className="p-6 space-y-5">
+                  {/* Title */}
                   <div>
-                    <label className="block text-white mb-2">Notification Methods:</label>
-                    <div className="flex space-x-4">
-                      {['push', 'email', 'sms'].map((method) => (
-                        <label key={method} className="flex items-center text-white">
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Reminder Title *</label>
+                    <input
+                      type="text"
+                      placeholder="e.g., Check passport expiry"
+                      value={newReminder.title}
+                      onChange={(e) => setNewReminder(prev => ({ ...prev, title: e.target.value }))}
+                      className="w-full px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
+                    />
+                  </div>
+
+                  {/* Description */}
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Description</label>
+                    <textarea
+                      placeholder="Add details about this reminder..."
+                      value={newReminder.description}
+                      onChange={(e) => setNewReminder(prev => ({ ...prev, description: e.target.value }))}
+                      rows={3}
+                      className="w-full px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                    />
+                  </div>
+
+                  {/* Type and Priority */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-2">Type</label>
+                      <select
+                        value={newReminder.type}
+                        onChange={(e) => setNewReminder(prev => ({ ...prev, type: e.target.value as any }))}
+                        className="w-full px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
+                      >
+                        <option value="pre_trip">✈️ Pre-trip</option>
+                        <option value="during_trip">🗺️ During Trip</option>
+                        <option value="post_trip">📸 Post-trip</option>
+                        <option value="weather">☁️ Weather</option>
+                        <option value="document">📄 Documents</option>
+                        <option value="health">❤️ Health</option>
+                        <option value="booking">🎫 Bookings</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-2">Priority</label>
+                      <select
+                        value={newReminder.priority}
+                        onChange={(e) => setNewReminder(prev => ({ ...prev, priority: e.target.value as any }))}
+                        className="w-full px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
+                      >
+                        <option value="low">🟢 Low Priority</option>
+                        <option value="medium">🟡 Medium Priority</option>
+                        <option value="high">🟠 High Priority</option>
+                        <option value="urgent">🔴 Urgent</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Date and Time */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-2">Date *</label>
+                      <input
+                        type="date"
+                        value={newReminder.reminderDate}
+                        onChange={(e) => setNewReminder(prev => ({ ...prev, reminderDate: e.target.value }))}
+                        className="w-full px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-2">Time *</label>
+                      <input
+                        type="time"
+                        value={newReminder.reminderTime}
+                        onChange={(e) => setNewReminder(prev => ({ ...prev, reminderTime: e.target.value }))}
+                        className="w-full px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Destination */}
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Destination (Optional)</label>
+                    <div className="relative">
+                      <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-red-500 w-5 h-5" />
+                      <input
+                        type="text"
+                        placeholder="e.g., Paris, France"
+                        value={newReminder.destination || ''}
+                        onChange={(e) => setNewReminder(prev => ({ ...prev, destination: e.target.value }))}
+                        className="w-full pl-12 pr-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Recurring Options */}
+                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-xl border-2 border-purple-200">
+                    <div className="flex items-center justify-between mb-3">
+                      <label className="flex items-center space-x-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={newReminder.isRecurring}
+                          onChange={(e) => setNewReminder(prev => ({ ...prev, isRecurring: e.target.checked }))}
+                          className="w-5 h-5 text-purple-600 rounded focus:ring-2 focus:ring-purple-500"
+                        />
+                        <span className="text-sm font-bold text-gray-700">Recurring Reminder</span>
+                      </label>
+
+                      {newReminder.isRecurring && (
+                        <select
+                          value={newReminder.recurringPattern}
+                          onChange={(e) => setNewReminder(prev => ({ ...prev, recurringPattern: e.target.value as any }))}
+                          className="px-3 py-2 bg-white border-2 border-purple-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 font-medium"
+                        >
+                          <option value="daily">📅 Daily</option>
+                          <option value="weekly">🗓️ Weekly</option>
+                          <option value="monthly">📆 Monthly</option>
+                        </select>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Notification Methods */}
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-3">Notification Methods</label>
+                    <div className="grid grid-cols-3 gap-3">
+                      {[
+                        { method: 'push', label: '🔔 Push', icon: Bell },
+                        { method: 'email', label: '📧 Email', icon: Bell },
+                        { method: 'sms', label: '📱 SMS', icon: Bell }
+                      ].map(({ method, label }) => (
+                        <label key={method} className="cursor-pointer">
                           <input
                             type="checkbox"
                             checked={newReminder.notificationMethods?.includes(method as any)}
@@ -990,28 +1468,40 @@ const SmartRemindersCalendar: React.FC = () => {
                                 }));
                               }
                             }}
-                            className="mr-2 w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                            className="sr-only"
                           />
-                          {method.toUpperCase()}
+                          <div className={`p-3 rounded-xl border-2 text-center font-semibold transition-all ${
+                            newReminder.notificationMethods?.includes(method as any)
+                              ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white border-purple-500 shadow-lg'
+                              : 'bg-white text-gray-600 border-gray-300 hover:border-purple-300'
+                          }`}>
+                            {label}
+                          </div>
                         </label>
                       ))}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex justify-end space-x-3 mt-6">
-                  <Button
+                {/* Modal Footer */}
+                <div className="flex justify-end space-x-3 p-6 bg-gray-50 rounded-b-3xl border-t-2 border-purple-100">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => setShowAddReminder(false)}
-                    className="bg-gray-600 hover:bg-gray-700"
+                    className="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-300 transition-colors"
                   >
                     Cancel
-                  </Button>
-                  <Button
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(139, 92, 246, 0.3)" }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={addReminder}
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold shadow-lg hover:from-purple-700 hover:to-pink-700 transition-all"
                   >
-                    Add Reminder
-                  </Button>
+                    <Plus className="inline mr-2 h-5 w-5" />
+                    Create Reminder
+                  </motion.button>
                 </div>
               </motion.div>
             </motion.div>

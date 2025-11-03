@@ -382,96 +382,583 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="container-custom py-8 space-y-8">
-      {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-8">
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">
-              {getGreeting()}, {state.user?.firstName}! ✈
-            </h1>
-            <p className="text-blue-100 text-lg">
-              Ready to plan your next adventure? Here's what's happening with your travels.
-            </p>
-          </div>
-          <div className="hidden md:block">
-            <div className="text-6xl opacity-20">🌍</div>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      {/* Floating Background Orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full blur-3xl"
+            style={{
+              width: `${Math.random() * 300 + 100}px`,
+              height: `${Math.random() * 300 + 100}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              background: [
+                'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)',
+                'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)',
+                'radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, transparent 70%)',
+                'radial-gradient(circle, rgba(251, 191, 36, 0.15) 0%, transparent 70%)',
+              ][i % 4]
+            }}
+            animate={{
+              x: [0, Math.random() * 100 - 50, 0],
+              y: [0, Math.random() * 100 - 50, 0],
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.6, 0.3]
+            }}
+            transition={{
+              duration: 20 + Math.random() * 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 0.5
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Hero Welcome Section with Enhanced Parallax */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"
+      >
+        {/* Animated Background Pattern */}
+        <div className="absolute inset-0">
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E")`
+            }}
+            animate={{
+              backgroundPosition: ['0% 0%', '100% 100%']
+            }}
+            transition={{
+              duration: 60,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
         </div>
-      </div>
 
-      {/* Enhanced Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="card p-6 text-center bg-gradient-to-br from-blue-50 to-blue-100"
-        >
-          <div className="text-3xl font-bold text-blue-600 mb-2">{stats.totalTrips}</div>
-          <div className="text-sm text-gray-600">Total Trips</div>
-          <div className="text-2xl mt-2">🗺</div>
-        </motion.div>
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="card p-6 text-center bg-gradient-to-br from-green-50 to-green-100"
-        >
-          <div className="text-3xl font-bold text-green-600 mb-2">{stats.upcomingTrips}</div>
-          <div className="text-sm text-gray-600">Upcoming Trips</div>
-          <div className="text-2xl mt-2">🎒</div>
-        </motion.div>
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="card p-6 text-center bg-gradient-to-br from-purple-50 to-purple-100"
-        >
-          <div className="text-3xl font-bold text-purple-600 mb-2">${stats.totalExpenses}</div>
-          <div className="text-sm text-gray-600">Total Spent</div>
-          <div className="text-2xl mt-2">💳</div>
-        </motion.div>
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="card p-6 text-center bg-gradient-to-br from-yellow-50 to-yellow-100"
-        >
-          <div className="text-3xl font-bold text-yellow-600 mb-2">${stats.totalSavings}</div>
-          <div className="text-sm text-gray-600">Money Saved</div>
-          <div className="text-2xl mt-2">💰</div>
-        </motion.div>
-      </div>
+        {/* Animated Floating Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {['✈️', '🌍', '🎒', '📸', '🗺️', '⛰️', '🏖️', '🎨'].map((emoji, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-4xl md:text-6xl opacity-20"
+              style={{
+                left: `${(i * 12.5)}%`,
+                top: `${20 + (i % 3) * 20}%`
+              }}
+              animate={{
+                y: [0, -30, 0],
+                x: [0, 20, 0],
+                rotate: [0, 360],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{
+                duration: 10 + i * 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.5
+              }}
+            >
+              {emoji}
+            </motion.div>
+          ))}
+        </div>
 
-      {/* Quick Actions */}
+        <div className="container-custom relative z-10 py-20 md:py-24">
+          <motion.div 
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="text-center"
+          >
+            {/* Animated Welcome Icon */}
+            <motion.div
+              className="inline-block mb-6"
+              animate={{ 
+                rotate: [0, 10, -10, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <div className="text-8xl md:text-9xl relative">
+                <motion.span
+                  animate={{
+                    textShadow: [
+                      '0 0 20px rgba(255,255,255,0.5)',
+                      '0 0 40px rgba(255,255,255,0.8)',
+                      '0 0 20px rgba(255,255,255,0.5)'
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  ✈️
+                </motion.span>
+              </div>
+            </motion.div>
+            
+            <motion.h1 
+              className="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight"
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <span className="block mb-2">{getGreeting()},</span>
+              <motion.span 
+                className="block bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200"
+                animate={{
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                }}
+                transition={{ duration: 5, repeat: Infinity }}
+                style={{
+                  backgroundSize: '200% 200%'
+                }}
+              >
+                {state.user?.firstName}
+              </motion.span>
+            </motion.h1>
+            
+            <motion.p 
+              className="text-xl md:text-3xl text-blue-100 mb-8 font-light max-w-4xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+            >
+              The world is your canvas. Let's paint it with unforgettable memories! 🌍✨
+            </motion.p>
+            
+            {/* Enhanced Quick Stats Bar */}
+            <motion.div 
+              className="flex flex-wrap justify-center gap-6 md:gap-10 mt-12"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9 }}
+            >
+              {[
+                { value: stats.totalTrips, label: 'Adventures', icon: '🗺️', gradient: 'from-blue-400 to-cyan-400' },
+                { value: stats.upcomingTrips, label: 'Upcoming', icon: '🎒', gradient: 'from-green-400 to-emerald-400' },
+                { value: `$${stats.totalExpenses}`, label: 'Invested', icon: '💳', gradient: 'from-purple-400 to-pink-400' },
+                { value: `$${stats.totalSavings}`, label: 'Saved', icon: '💰', gradient: 'from-yellow-400 to-orange-400' }
+              ].map((stat, i) => (
+                <motion.div 
+                  key={i}
+                  whileHover={{ scale: 1.15, y: -10 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative group"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 1 + i * 0.1, type: "spring" }}
+                >
+                  <div className="bg-white bg-opacity-20 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white border-opacity-30 shadow-2xl hover:shadow-3xl transition-all duration-300">
+                    <motion.div
+                      className="text-4xl mb-3"
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    >
+                      {stat.icon}
+                    </motion.div>
+                    <motion.div 
+                      className="text-4xl md:text-5xl font-extrabold text-white mb-2"
+                      animate={{ scale: [1, 1.05, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                    >
+                      {stat.value}
+                    </motion.div>
+                    <div className="text-sm md:text-base text-blue-100 font-medium uppercase tracking-wider">
+                      {stat.label}
+                    </div>
+                  </div>
+                  {/* Glow effect */}
+                  <div className={`absolute inset-0 bg-gradient-to-r ${stat.gradient} opacity-0 group-hover:opacity-30 blur-xl rounded-2xl transition-opacity duration-300`} />
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* CTA Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4 }}
+              className="mt-12"
+            >
+              <motion.button
+                whileHover={{ scale: 1.1, boxShadow: "0 20px 60px rgba(0,0,0,0.3)" }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => navigate('/trip-planner')}
+                className="inline-flex items-center px-10 py-5 bg-white text-purple-600 rounded-full text-lg md:text-xl font-bold shadow-2xl hover:bg-gradient-to-r hover:from-yellow-300 hover:to-pink-300 hover:text-purple-700 transition-all duration-300 group"
+              >
+                <motion.span
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  className="mr-3 text-2xl"
+                >
+                  ✨
+                </motion.span>
+                Plan Your Next Adventure
+                <motion.span 
+                  className="ml-3 group-hover:ml-5 transition-all"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  →
+                </motion.span>
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Enhanced Wave Divider */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 120" className="w-full h-16 md:h-24">
+            <defs>
+              <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgb(239 246 255)" />
+                <stop offset="50%" stopColor="rgb(243 232 255)" />
+                <stop offset="100%" stopColor="rgb(252 231 243)" />
+              </linearGradient>
+            </defs>
+            <motion.path 
+              fill="url(#waveGradient)"
+              d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,74.7C1248,75,1344,53,1392,42.7L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"
+              animate={{
+                d: [
+                  "M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,74.7C1248,75,1344,53,1392,42.7L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z",
+                  "M0,64L48,58.7C96,53,192,43,288,48C384,53,480,75,576,74.7C672,75,768,53,864,42.7C960,32,1056,32,1152,37.3C1248,43,1344,53,1392,58.7L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z",
+                  "M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,74.7C1248,75,1344,53,1392,42.7L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"
+                ]
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          </svg>
+        </div>
+      </motion.div>
+
+      <div className="container-custom py-12 space-y-12 relative z-10">
+
+      {/* Ultra-Enhanced Stats Cards */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 -mt-24 relative z-20"
+      >
+        {[
+          { 
+            value: stats.totalTrips, 
+            label: 'Total Adventures', 
+            sublabel: 'Your journey so far',
+            icon: '🗺️', 
+            gradient: 'from-blue-500 via-cyan-500 to-teal-500',
+            borderColor: 'border-blue-400',
+            shadowColor: 'shadow-blue-500/50',
+            animation: { rotate: [0, 360] },
+            duration: 20
+          },
+          { 
+            value: stats.upcomingTrips, 
+            label: 'Upcoming Trips', 
+            sublabel: 'Ready for adventure',
+            icon: '🎒', 
+            gradient: 'from-green-500 via-emerald-500 to-teal-500',
+            borderColor: 'border-green-400',
+            shadowColor: 'shadow-green-500/50',
+            animation: { y: [0, -15, 0] },
+            duration: 2
+          },
+          { 
+            value: `$${stats.totalExpenses}`, 
+            label: 'Total Invested', 
+            sublabel: 'Memories created',
+            icon: '💳', 
+            gradient: 'from-purple-500 via-pink-500 to-rose-500',
+            borderColor: 'border-purple-400',
+            shadowColor: 'shadow-purple-500/50',
+            animation: { scale: [1, 1.15, 1] },
+            duration: 2.5
+          },
+          { 
+            value: `$${stats.totalSavings}`, 
+            label: 'Smart Savings', 
+            sublabel: 'Optimized spending',
+            icon: '💰', 
+            gradient: 'from-yellow-500 via-orange-500 to-red-500',
+            borderColor: 'border-yellow-400',
+            shadowColor: 'shadow-yellow-500/50',
+            animation: { rotate: [0, 15, -15, 0] },
+            duration: 3
+          }
+        ].map((stat, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.6 + index * 0.1, type: "spring", stiffness: 200 }}
+            whileHover={{ 
+              scale: 1.08, 
+              y: -15,
+              rotateY: 5,
+              transition: { type: "spring", stiffness: 300 }
+            }}
+            className="group relative"
+          >
+            {/* Glow Effect */}
+            <div className={`absolute inset-0 bg-gradient-to-r ${stat.gradient} opacity-0 group-hover:opacity-20 blur-2xl rounded-3xl transition-all duration-500`} />
+            
+            {/* Card */}
+            <div className={`relative bg-white rounded-3xl shadow-2xl ${stat.shadowColor} hover:shadow-3xl transition-all duration-300 overflow-hidden border-2 ${stat.borderColor}`}>
+              {/* Animated Background Pattern */}
+              <div className="absolute inset-0 opacity-5">
+                <motion.div
+                  className="w-full h-full"
+                  style={{
+                    backgroundImage: `radial-gradient(circle at 20% 50%, currentColor 1px, transparent 1px), radial-gradient(circle at 80% 80%, currentColor 1px, transparent 1px)`,
+                    backgroundSize: '20px 20px'
+                  }}
+                  animate={{
+                    backgroundPosition: ['0px 0px', '20px 20px']
+                  }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                />
+              </div>
+
+              <div className="relative p-8 text-center">
+                {/* Icon */}
+                <motion.div
+                  animate={stat.animation}
+                  transition={{ 
+                    duration: stat.duration, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                  className={`relative w-20 h-20 mx-auto mb-6 bg-gradient-to-br ${stat.gradient} rounded-2xl flex items-center justify-center text-4xl shadow-xl group-hover:shadow-2xl transition-shadow`}
+                >
+                  <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 rounded-2xl transition-opacity" />
+                  {stat.icon}
+                </motion.div>
+
+                {/* Value */}
+                <motion.div 
+                  className={`text-5xl font-extrabold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-3`}
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                >
+                  {stat.value}
+                </motion.div>
+
+                {/* Label */}
+                <div className="text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">
+                  {stat.label}
+                </div>
+
+                {/* Sublabel */}
+                <div className={`text-xs bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent font-semibold`}>
+                  {stat.sublabel}
+                </div>
+
+                {/* Progress Bar Effect */}
+                <motion.div
+                  className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${stat.gradient}`}
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: 0.8 + index * 0.1, duration: 0.8 }}
+                />
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* Ultra-Enhanced Quick Actions */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
+        transition={{ delay: 0.7 }}
+        className="relative"
       >
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="text-center mb-12">
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
+            className="inline-block"
+          >
+            <motion.h2 
+              className="text-5xl font-extrabold mb-4 relative inline-block"
+              animate={{
+                textShadow: [
+                  '0 0 20px rgba(139, 92, 246, 0.3)',
+                  '0 0 40px rgba(236, 72, 153, 0.3)',
+                  '0 0 20px rgba(139, 92, 246, 0.3)'
+                ]
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+                🚀 Explore Features
+              </span>
+              {/* Decorative Line */}
+              <motion.div
+                className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 rounded-full"
+                animate={{
+                  scaleX: [0.5, 1, 0.5],
+                  opacity: [0.5, 1, 0.5]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+            </motion.h2>
+          </motion.div>
+          <motion.p 
+            className="text-xl text-gray-600 mt-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9 }}
+          >
+            Discover AI-powered tools to elevate your travel experience to new heights ✨
+          </motion.p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {quickActions.map((action, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.6 + index * 0.1 }}
+              initial={{ opacity: 0, scale: 0.8, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ 
+                delay: 0.9 + index * 0.05,
+                type: "spring",
+                stiffness: 200,
+                damping: 15
+              }}
+              whileHover={{ 
+                scale: 1.06, 
+                y: -12,
+                rotateY: 2,
+                transition: { type: "spring", stiffness: 400, damping: 10 }
+              }}
               onClick={action.action}
-              className="card p-6 hover:shadow-lg transition-all duration-200 cursor-pointer hover:scale-105"
+              className="group relative cursor-pointer"
             >
-              <div className="flex items-center space-x-4">
-                <div className={`w-12 h-12 ${action.color} rounded-lg flex items-center justify-center text-white text-2xl`}>
-                  {action.icon}
+              {/* Outer Glow */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 rounded-3xl opacity-0 group-hover:opacity-30 blur-lg transition-all duration-500" />
+              
+              {/* Card Container */}
+              <div className="relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-gray-100 group-hover:border-purple-200">
+                {/* Gradient Background on Hover */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  initial={false}
+                />
+                
+                {/* Animated Pattern Overlay */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500">
+                  <motion.div
+                    className="w-full h-full"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+                    }}
+                    animate={{
+                      backgroundPosition: ['0px 0px', '60px 60px']
+                    }}
+                    transition={{
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  />
                 </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900">{action.title}</h3>
-                  <p className="text-sm text-gray-600">{action.description}</p>
+
+                <div className="relative p-7">
+                  {/* Icon Container */}
+                  <div className="flex items-start space-x-5 mb-4">
+                    <motion.div
+                      whileHover={{ 
+                        rotate: [0, -15, 15, -10, 10, 0],
+                        scale: 1.2
+                      }}
+                      transition={{ duration: 0.6 }}
+                      className={`relative w-16 h-16 ${action.color} rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg flex-shrink-0 group-hover:shadow-2xl transition-shadow`}
+                    >
+                      {/* Icon Glow */}
+                      <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 rounded-2xl transition-opacity" />
+                      <span className="relative z-10">{action.icon}</span>
+                      
+                      {/* Pulse Ring */}
+                      <motion.div
+                        className={`absolute inset-0 ${action.color} rounded-2xl opacity-0 group-hover:opacity-75`}
+                        animate={{
+                          scale: [1, 1.5, 1.5],
+                          opacity: [0.75, 0, 0]
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          repeatDelay: 0.5
+                        }}
+                      />
+                    </motion.div>
+
+                    <div className="flex-1">
+                      <h3 className="font-bold text-lg text-gray-900 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text transition-all duration-300">
+                        {action.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 leading-relaxed line-clamp-2">
+                        {action.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Bottom Bar with Arrow */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100 group-hover:border-purple-200 transition-colors">
+                    <span className="text-xs font-semibold text-gray-400 group-hover:text-purple-600 transition-colors uppercase tracking-wider">
+                      Explore Now
+                    </span>
+                    <motion.div
+                      className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white shadow-md group-hover:shadow-lg transition-shadow"
+                      animate={{
+                        x: [0, 5, 0]
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </motion.div>
+                  </div>
                 </div>
+
+                {/* Shimmer Effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-40"
+                  animate={{
+                    x: ['-100%', '200%']
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                    ease: "easeInOut"
+                  }}
+                  style={{
+                    transform: 'skewX(-20deg)'
+                  }}
+                />
               </div>
             </motion.div>
           ))}
@@ -482,23 +969,30 @@ const Dashboard: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
+        transition={{ delay: 1.0 }}
+        className="bg-white rounded-3xl shadow-xl p-8"
       >
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Travel Tools</h2>
-          <div className="flex space-x-2">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">🛠️ Travel Tools</h2>
+            <p className="text-gray-600">Essential utilities for your journey</p>
+          </div>
+          <div className="flex flex-wrap gap-3 mt-4 md:mt-0">
             {travelWidgets.map((widget) => (
-              <button
+              <motion.button
                 key={widget.id}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveWidget(activeWidget === widget.id ? null : widget.id as any)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${
                   activeWidget === widget.id
-                    ? 'bg-primary-500 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md'
                 }`}
               >
-                {widget.icon} {widget.title}
-              </button>
+                <span className="mr-2">{widget.icon}</span>
+                {widget.title}
+              </motion.button>
             ))}
           </div>
         </div>
@@ -507,12 +1001,15 @@ const Dashboard: React.FC = () => {
         <AnimatePresence>
           {activeWidget && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="mb-8"
+              initial={{ opacity: 0, height: 0, y: -20 }}
+              animate={{ opacity: 1, height: 'auto', y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
             >
-              {travelWidgets.find(w => w.id === activeWidget)?.component}
+              <div className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl">
+                {travelWidgets.find(w => w.id === activeWidget)?.component}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -704,47 +1201,110 @@ const Dashboard: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2 }}
-        className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-8"
+        transition={{ delay: 1.4 }}
+        className="relative overflow-hidden bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 rounded-3xl shadow-2xl"
       >
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">🤖 AI-Powered Travel Features</h2>
-          <p className="text-gray-600">Experience the future of travel planning</p>
+        {/* Animated Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+          }} />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-lg shadow-sm">
-            <div className="text-3xl mb-3">🧠</div>
-            <h3 className="font-semibold text-gray-900 mb-2">Smart Recommendations</h3>
-            <p className="text-sm text-gray-600">
-              AI analyzes your preferences to suggest perfect destinations, activities, and experiences.
-            </p>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-sm">
-            <div className="text-3xl mb-3">📅</div>
-            <h3 className="font-semibold text-gray-900 mb-2">Intelligent Itineraries</h3>
-            <p className="text-sm text-gray-600">
-              Generate optimized day-by-day plans based on your budget, interests, and travel style.
-            </p>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-sm">
-            <div className="text-3xl mb-3">💬</div>
-            <h3 className="font-semibold text-gray-900 mb-2">24/7 AI Assistant</h3>
-            <p className="text-sm text-gray-600">
-              Get instant answers to travel questions, emergency assistance, and real-time support.
-            </p>
-          </div>
-        </div>
-
-        <div className="text-center mt-6">
-          <Button 
-            onClick={() => navigate('/trip-planner')}
-            className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
+        <div className="relative z-10 p-12">
+          <motion.div 
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 1.5 }}
+            className="text-center mb-12"
           >
-            Try AI Trip Planning Now →
-          </Button>
+            <motion.div
+              animate={{ 
+                scale: [1, 1.2, 1],
+                rotate: [0, 360]
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="inline-block text-6xl mb-4"
+            >
+              �
+            </motion.div>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
+              AI-Powered Travel Revolution
+            </h2>
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              Experience the future of travel planning with cutting-edge artificial intelligence
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+            {[
+              {
+                icon: '🧠',
+                title: 'Smart Recommendations',
+                description: 'AI analyzes your preferences to suggest perfect destinations, activities, and experiences tailored just for you.',
+                gradient: 'from-pink-500 to-rose-500'
+              },
+              {
+                icon: '📅',
+                title: 'Intelligent Itineraries',
+                description: 'Generate optimized day-by-day plans based on your budget, interests, and unique travel style.',
+                gradient: 'from-blue-500 to-cyan-500'
+              },
+              {
+                icon: '💬',
+                title: '24/7 AI Assistant',
+                description: 'Get instant answers to travel questions, emergency assistance, and real-time support anytime, anywhere.',
+                gradient: 'from-purple-500 to-indigo-500'
+              }
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.6 + index * 0.1 }}
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-8 border border-white border-opacity-20 hover:bg-opacity-20 transition-all duration-300"
+              >
+                <motion.div 
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
+                  className="text-5xl mb-4"
+                >
+                  {feature.icon}
+                </motion.div>
+                <h3 className="text-xl font-bold text-white mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-blue-100 leading-relaxed">
+                  {feature.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.9 }}
+            className="text-center"
+          >
+            <motion.button
+              whileHover={{ scale: 1.1, boxShadow: "0 20px 40px rgba(0,0,0,0.3)" }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/trip-planner')}
+              className="inline-flex items-center px-10 py-5 bg-white text-purple-600 rounded-full text-lg font-bold shadow-2xl hover:bg-gradient-to-r hover:from-yellow-400 hover:to-pink-400 hover:text-white transition-all duration-300"
+            >
+              <span className="mr-3">✨</span>
+              Start Your AI Journey Now
+              <motion.span 
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1, repeat: Infinity }}
+                className="ml-3"
+              >
+                →
+              </motion.span>
+            </motion.button>
+          </motion.div>
         </div>
       </motion.div>
 
@@ -813,6 +1373,7 @@ const Dashboard: React.FC = () => {
 
       {/* AI Chatbot - Always available */}
       <AdvancedAIChatbot />
+      </div>
     </div>
   );
 };
