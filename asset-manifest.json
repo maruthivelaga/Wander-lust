@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Wander-lust/static/css/main.500213f1.css",
-    "main.js": "/Wander-lust/static/js/main.023476b7.js",
+    "main.css": "/Wander-lust/static/css/main.00b169d5.css",
+    "main.js": "/Wander-lust/static/js/main.f106faac.js",
     "index.html": "/Wander-lust/index.html",
-    "main.500213f1.css.map": "/Wander-lust/static/css/main.500213f1.css.map",
-    "main.023476b7.js.map": "/Wander-lust/static/js/main.023476b7.js.map"
+    "main.00b169d5.css.map": "/Wander-lust/static/css/main.00b169d5.css.map",
+    "main.f106faac.js.map": "/Wander-lust/static/js/main.f106faac.js.map"
   },
   "entrypoints": [
-    "static/css/main.500213f1.css",
-    "static/js/main.023476b7.js"
+    "static/css/main.00b169d5.css",
+    "static/js/main.f106faac.js"
   ]
 }
