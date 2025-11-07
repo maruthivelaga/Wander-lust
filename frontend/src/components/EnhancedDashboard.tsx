@@ -93,11 +93,11 @@ const EnhancedDashboard: React.FC = () => {
     predictionsAccuracy: 94
   });
 
-  // Scroll animation for airplane
+  // Scroll animation for airplane - moves to top-right corner and minimizes
   const { scrollY } = useScroll();
-  const planeX = useTransform(scrollY, [0, 300], [0, -120]);
-  const planeY = useTransform(scrollY, [0, 300], [0, -80]);
-  const planeScale = useTransform(scrollY, [0, 300], [1, 0.45]);
+  const planeX = useTransform(scrollY, [0, 400], [0, 100]); // Move right
+  const planeY = useTransform(scrollY, [0, 400], [0, -200]); // Move up significantly
+  const planeScale = useTransform(scrollY, [0, 400], [1, 0.25]); // Shrink to 25%
 
   useEffect(() => {
     fetchDashboardData();
