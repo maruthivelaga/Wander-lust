@@ -469,10 +469,8 @@ const EnhancedDashboard: React.FC = () => {
           </div>
 
           {/* Animated Airplane */}
-          <motion.img
-            src="/plane.png"
-            alt="Airplane"
-            className="absolute top-24 right-24 z-20 w-64 h-64 object-contain pointer-events-none"
+          <motion.div
+            className="absolute top-24 right-24 z-20 pointer-events-none"
             style={{
               x: planeX,
               y: planeY,
@@ -481,7 +479,9 @@ const EnhancedDashboard: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-          />
+          >
+            <Plane className="w-64 h-64 text-white drop-shadow-2xl" strokeWidth={1.5} />
+          </motion.div>
           
           <div className="relative container mx-auto px-4 py-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
