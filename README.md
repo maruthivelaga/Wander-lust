@@ -1,4 +1,4 @@
-# 🌍 Wanderlust Travel App
+🌍 Wanderlust Travel App
 
 A comprehensive AI-powered travel planning application built with React frontend and Node.js backend. This app helps users plan, manage, and track their travel experiences with intelligent recommendations and real-time information.
 
