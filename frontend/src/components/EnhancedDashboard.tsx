@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './Button';
 import { 
@@ -73,6 +73,7 @@ interface SavedTrip {
 const EnhancedDashboard: React.FC = () => {
   const { state } = useAuth();
   const navigate = useNavigate();
+  const heroRef = useRef<HTMLDivElement>(null);
   const [trips, setTrips] = useState<Trip[]>([]);
   const [savedTrips, setSavedTrips] = useState<SavedTrip[]>([]);
   const [loading, setLoading] = useState(true);
@@ -91,6 +92,12 @@ const EnhancedDashboard: React.FC = () => {
     moodTracked: 89,
     predictionsAccuracy: 94
   });
+
+  // Scroll animation for airplane
+  const { scrollY } = useScroll();
+  const planeX = useTransform(scrollY, [0, 300], [0, -120]);
+  const planeY = useTransform(scrollY, [0, 300], [0, -80]);
+  const planeScale = useTransform(scrollY, [0, 300], [1, 0.45]);
 
   useEffect(() => {
     fetchDashboardData();
@@ -448,6 +455,7 @@ const EnhancedDashboard: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       {/* Hero Section */}
       <motion.div
+        ref={heroRef}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="relative overflow-hidden"
@@ -459,6 +467,21 @@ const EnhancedDashboard: React.FC = () => {
             <div className="absolute bottom-10 right-10 w-40 h-40 bg-white bg-opacity-10 rounded-full blur-xl"></div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-white bg-opacity-5 rounded-full blur-2xl"></div>
           </div>
+
+          {/* Animated Airplane */}
+          <motion.img
+            src="/plane.png"
+            alt="Airplane"
+            className="absolute top-24 right-24 z-20 w-64 h-64 object-contain pointer-events-none"
+            style={{
+              x: planeX,
+              y: planeY,
+              scale: planeScale,
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          />
           
           <div className="relative container mx-auto px-4 py-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
